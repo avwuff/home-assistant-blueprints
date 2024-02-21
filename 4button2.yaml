@@ -86,7 +86,7 @@ blueprint:
 mode: single
 max_exceeded: silent
 variables:
-  command: "{{ trigger.payload }}"
+  command: "{{ trigger.to_state.attributes.action }}"
 trigger:
   - platform: state
     entity_id: !input switch
