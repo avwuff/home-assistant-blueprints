@@ -125,7 +125,7 @@ action:
         sequence: !input "button_two_hold"
       - conditions:
           - "{{ command == '3_hold' }}"
-                sequence: !input "button_three_hold"
-              - conditions:
-                  - "{{ command == '4_hold' }}"
-                sequence: !input "button_four_hold"
+        sequence: !input "button_three_hold"
+      - conditions:
+          - "{{ command == '4_hold' }}"
+        sequence: !input "button_four_hold"
