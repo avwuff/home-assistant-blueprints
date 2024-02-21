@@ -129,5 +129,3 @@ action:
       - conditions:
           - "{{ command == '4_hold' }}"
         sequence: !input "button_four_hold"
-
-
