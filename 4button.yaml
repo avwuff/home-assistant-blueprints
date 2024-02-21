@@ -82,56 +82,49 @@ blueprint:
       default: []
       selector:
         action: null
-  source_url: https://gist.github.com/whalelion/5f19317ea530687a768ed2c34218cbc4
+  source_url: https://github.com/avwuff/home-assistant-blueprints/edit/main/4button.yaml
 mode: single
 max_exceeded: silent
 variables:
   command: "{{ trigger.payload }}"
-  topic: "{{ trigger.topic }}"
-  switch_name: !input "switch"
-  deviceName: "{{ state_attr(switch_name, 'friendly_name') }}"
 trigger:
-  - platform: mqtt
-    topic: zigbee2mqtt/+/action
+  - platform: state
+    entity_id: !input switch
+    attribute: action
 action:
   - choose:
       - conditions:
-          - "{{ topic.split('/')[1].replace('/', '') == deviceName.split(' ')[0]
-            }}"
-        sequence:
-          - choose:
-              - conditions:
-                  - "{{ command == '1_single' }}"
-                sequence: !input "button_one_short_press"
-              - conditions:
-                  - "{{ command == '2_single' }}"
-                sequence: !input "button_two_short_press"
-              - conditions:
-                  - "{{ command == '3_single' }}"
-                sequence: !input "button_three_short_press"
-              - conditions:
-                  - "{{ command == '4_single' }}"
-                sequence: !input "button_four_short_press"
-              - conditions:
-                  - "{{ command == '1_double' }}"
-                sequence: !input "button_one_double_press"
-              - conditions:
-                  - "{{ command == '2_double' }}"
-                sequence: !input "button_two_double_press"
-              - conditions:
-                  - "{{ command == '3_double' }}"
-                sequence: !input "button_three_double_press"
-              - conditions:
-                  - "{{ command == '4_double' }}"
-                sequence: !input "button_four_double_press"
-              - conditions:
-                  - "{{ command == '1_hold' }}"
-                sequence: !input "button_one_hold"
-              - conditions:
-                  - "{{ command == '2_hold' }}"
-                sequence: !input "button_two_hold"
-              - conditions:
-                  - "{{ command == '3_hold' }}"
+          - "{{ command == '1_single' }}"
+        sequence: !input "button_one_short_press"
+      - conditions:
+          - "{{ command == '2_single' }}"
+        sequence: !input "button_two_short_press"
+      - conditions:
+          - "{{ command == '3_single' }}"
+        sequence: !input "button_three_short_press"
+      - conditions:
+          - "{{ command == '4_single' }}"
+        sequence: !input "button_four_short_press"
+      - conditions:
+          - "{{ command == '1_double' }}"
+        sequence: !input "button_one_double_press"
+      - conditions:
+          - "{{ command == '2_double' }}"
+        sequence: !input "button_two_double_press"
+      - conditions:
+          - "{{ command == '3_double' }}"
+        sequence: !input "button_three_double_press"
+      - conditions:
+          - "{{ command == '4_double' }}"
+        sequence: !input "button_four_double_press"
+      - conditions:
+          - "{{ command == '1_hold' }}"
+        sequence: !input "button_one_hold"
+      - conditions:
+          - "{{ command == '2_hold' }}"
+        sequence: !input "button_two_hold"
+      - conditions:
+          - "{{ command == '3_hold' }}"
                 sequence: !input "button_three_hold"
               - conditions:
                   - "{{ command == '4_hold' }}"
