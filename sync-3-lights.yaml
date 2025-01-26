@@ -1,0 +1,90 @@
+name: Synchronize brightness states 3
+  description: Synchronize the on/off state of 3 entities
+  domain: automation
+  input:
+    entity_1:
+      name: First entity
+      selector:
+        entity: {}
+    entity_2:
+      name: Second entity
+      selector:
+        entity: {}
+    entity_3:
+      name: Third entity
+      selector:
+        entity: {}
+  source_url: https://gist.github.com/avwuff
+mode: restart
+max_exceeded: silent
+variables:
+  entity_1: !input entity_1
+  entity_2: !input entity_2
+  entity_3: !input entity_3
+trigger:
+  - platform: state
+    entity_id: !input entity_1
+  - platform: state
+    entity_id: !input entity_1
+    attribute: brightness
+
+  - platform: state
+    entity_id: !input entity_2
+  - platform: state
+    entity_id: !input entity_2
+    attribute: brightness
+
+  - platform: state
+    entity_id: !input entity_3
+  - platform: state
+    entity_id: !input entity_3
+    attribute: brightness
+
+condition: []
+action:
+  - choose:
+      - conditions:
+          condition: template
+          value_template: "{{ is_state(trigger.to_state.entity_id, 'on') }}"
+        sequence:
+          - condition: template
+            value_template: "{{ trigger.from_state.entity_id != entity_1 }}"
+            sequence:
+              - service: light.turn_on
+                data:
+                  brightness: '{{ state_attr(trigger.to_state.entity_id, "brightness") }}'
+                  entity_id: '{{ entity_1 }}'
+          - condition: template
+            value_template: "{{ trigger.from_state.entity_id != entity_2 }}"
+            sequence:
+              - service: light.turn_on
+                data:
+                  brightness: '{{ state_attr(trigger.to_state.entity_id, "brightness") }}'
+                  entity_id: '{{ entity_2 }}'
+          - condition: template
+            value_template: "{{ trigger.from_state.entity_id != entity_3 }}"
+            sequence:
+              - service: light.turn_on
+                data:
+                  brightness: '{{ state_attr(trigger.to_state.entity_id, "brightness") }}'
+                  entity_id: '{{ entity_3 }}'
+    default:
+      - condition: template
+        value_template: "{{ trigger.from_state.entity_id != entity_1 }}"
+        sequence:
+          - service: light.turn_off
+            data:
+              entity_id: '{{ entity_1 }}'
+      - condition: template
+        value_template: "{{ trigger.from_state.entity_id != entity_2 }}"
+        sequence:
+          - service: light.turn_off
+            data:
+              entity_id: '{{ entity_2 }}'
+      - condition: template
+        value_template: "{{ trigger.from_state.entity_id != entity_3 }}"
+        sequence:
+          - service: light.turn_off
+            data:
+              entity_id: '{{ entity_3 }}'
+
