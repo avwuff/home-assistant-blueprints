@@ -1,4 +1,5 @@
-name: Synchronize brightness states 3
+blueprint:
+  name: Synchronize brightness states 3
   description: Synchronize the on/off state of 3 entities
   domain: automation
   input:
