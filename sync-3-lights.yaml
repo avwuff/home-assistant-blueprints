@@ -51,41 +51,42 @@ action:
           - condition: template
             value_template: "{{ trigger.from_state.entity_id != entity_1 }}"
             sequence:
-              - service: light.turn_on
-                data:
-                  brightness: '{{ state_attr(trigger.to_state.entity_id, "brightness") }}'
-                  entity_id: '{{ entity_1 }}'
+              - data:
+                  brightness: "{{ state_attr(trigger.to_state.entity_id, \"brightness\") }}"
+                  entity_id: "{{ entity_1 }}"
+                action: light.turn_on
           - condition: template
             value_template: "{{ trigger.from_state.entity_id != entity_2 }}"
             sequence:
-              - service: light.turn_on
-                data:
-                  brightness: '{{ state_attr(trigger.to_state.entity_id, "brightness") }}'
-                  entity_id: '{{ entity_2 }}'
+              - data:
+                  brightness: "{{ state_attr(trigger.to_state.entity_id, \"brightness\") }}"
+                  entity_id: "{{ entity_2 }}"
+                action: light.turn_on
           - condition: template
             value_template: "{{ trigger.from_state.entity_id != entity_3 }}"
             sequence:
-              - service: light.turn_on
-                data:
-                  brightness: '{{ state_attr(trigger.to_state.entity_id, "brightness") }}'
-                  entity_id: '{{ entity_3 }}'
+              - data:
+                  brightness: "{{ state_attr(trigger.to_state.entity_id, \"brightness\") }}"
+                  entity_id: "{{ entity_3 }}"
+                action: light.turn_on
     default:
       - condition: template
         value_template: "{{ trigger.from_state.entity_id != entity_1 }}"
         sequence:
-          - service: light.turn_off
-            data:
-              entity_id: '{{ entity_1 }}'
+          - data:
+              entity_id: "{{ entity_1 }}"
+            action: light.turn_off
       - condition: template
         value_template: "{{ trigger.from_state.entity_id != entity_2 }}"
         sequence:
-          - service: light.turn_off
-            data:
-              entity_id: '{{ entity_2 }}'
+          - data:
+              entity_id: "{{ entity_2 }}"
+            action: light.turn_off
       - condition: template
         value_template: "{{ trigger.from_state.entity_id != entity_3 }}"
         sequence:
-          - service: light.turn_off
-            data:
-              entity_id: '{{ entity_3 }}'
+          - data:
+              entity_id: "{{ entity_3 }}"
+            action: light.turn_off
+
 
